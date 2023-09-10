@@ -3,6 +3,7 @@ package com.example.trabalho;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     Button botaoCalcular;
+    Button botaoAluno;
     EditText edtPeso, edtAltura;
 
     @Override
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         edtPeso = findViewById(R.id.edtPeso);
         edtAltura = findViewById(R.id.edtAltura);
         botaoCalcular = findViewById(R.id.btnCalcular);
+        botaoAluno = findViewById(R.id.btnAluno);
 
         botaoCalcular.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,13 +32,20 @@ public class MainActivity extends AppCompatActivity {
                 calcular();
             }
         });
+
+        botaoAluno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirTelaAluno();
+            }
+        });
     }
 
     private void calcular() {
-        double valorPeso = Double.parseDouble(edtPeso.getText().toString());
+        int valorPeso = Integer.parseInt(edtPeso.getText().toString());
         double valorAltura = Double.parseDouble(edtAltura.getText().toString());
 
-        double imc = valorPeso / valorAltura;
+        double imc = valorPeso / (valorAltura * valorAltura);
 
         if (imc < 18.5){
             mostrarMensagem("Seu IMC indica magreza");
@@ -62,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
         alerta.setNeutralButton("Ok", null);
 
         alerta.show();
+    }
+    
+    private void abrirTelaAluno() {
+        Intent telaAluno = new Intent(MainActivity.this, AlunoActivity.class);
+
+        startActivity(telaAluno);
     }
 
 }
